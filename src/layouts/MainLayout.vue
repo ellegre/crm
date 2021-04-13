@@ -22,13 +22,16 @@ export default {
   data() {
     return {
       isOpen: true
+    }    
+  },
+  async mounted() {
+    if (this.$store.getters.info) {
+      await this.$store.dispatch('fetchInfo')
     }
-    
   },
   components: {
     Navbar,
     Sidebar
-  }
-  
+  } 
 }
 </script>
