@@ -1,5 +1,6 @@
 <template>
-  <div class="app-main-layout">
+  <div><Loader v-if="loading" />
+    <div class="app-main-layout" v-else>
     <Navbar @click="isOpen = !isOpen"/>
     <Sidebar v-model="isOpen" />
     <main class="app-content" :class="{ full: !isOpen }">
@@ -13,6 +14,7 @@
       </router-link>
     </div>
   </div>
+  </div>  
 </template>
 <script>
 import Navbar from '@/components/Navbar.vue'
@@ -21,13 +23,15 @@ import Sidebar from '@/components/Sidebar.vue'
 export default {
   data() {
     return {
-      isOpen: true
+      isOpen: true,
+      loading: true
     }    
   },
   async mounted() {
-    if (this.$store.getters.info) {
+    if (!Object.keys(this.$store.getters.info).length) {
       await this.$store.dispatch('fetchInfo')
     }
+    this.loading = false
   },
   components: {
     Navbar,
