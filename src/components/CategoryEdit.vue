@@ -79,6 +79,27 @@ export default {
     title: {required},
     limit: {minValue: minValue(100)}
   },
+  methods: {
+    async submit() {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
+      try {
+        const categoryData = {
+          id: this.current,
+          title: this.title,
+          limit: this.limit
+        }
+        await this.$store.dispatch('updateCategory', categoryData)
+        this.$message('Категория успешно обновлена')
+        this.$emit('updated', categoryData)
+
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  },
   watch: {
     current(categoryId) {
       const {title, limit} = this.categories.find(c => c.id === categoryId)
