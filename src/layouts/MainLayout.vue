@@ -19,6 +19,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
+import messages from '@/utils/messages'
 
 export default {
   data() {
@@ -26,6 +27,16 @@ export default {
       isOpen: true,
       loading: true
     }    
+  },
+  computed: {
+    error() {
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    error(fbError) {
+      this.$error(messages[fbError.code] || 'Что-то пошло не так')
+    }
   },
   async mounted() {
     if (!Object.keys(this.$store.getters.info).length) {
