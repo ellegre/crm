@@ -5,6 +5,8 @@
     </div>
     <section>
       <Loader v-if="loading" />
+      <p v-else-if="!categories.length" class="center">Категорий пока нет.</p>
+          
       <div class="row" v-else>
 
         <CategoryCreate @created="addNewCategory" />
@@ -15,8 +17,7 @@
           :key="categories.length + updateCount"
           @updated="updateCategories"
         />
-        <p class="center">Категорий пока нет</p>
-          
+        
       </div>
     </section>
   </div>
